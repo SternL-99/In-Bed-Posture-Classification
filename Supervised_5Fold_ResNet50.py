@@ -19,9 +19,9 @@ def load_data(data_dir, input_size=224):
     dataset = datasets.ImageFolder(data_dir, transform=transform)
     return dataset
 
-# Step 2: Define the ShuffleNet model with tunable hyperparameters
+# Step 2: Define the ResNet50 model with tunable hyperparameters
 def build_model(num_classes, num_layers, units_per_layer, dropout_rate, input_size=224):
-    model = models.resnet50(pretrained=False)  # Load ShuffleNet V2 (1.0x) without pre-trained weights
+    model = models.resnet50(pretrained=False)  # Load ResNet50 without pre-trained weights
 
     # Step 2: Load the weights from a file
     weights_path = r'/cluster/projects/kite/LindsayS/resnet50_weights.pth'  # Path to the weights file
@@ -34,8 +34,8 @@ def build_model(num_classes, num_layers, units_per_layer, dropout_rate, input_si
     for param in model.parameters():
         param.requires_grad = False
 
-    # Modify the fully connected (fc) layer of ShuffleNet
-    in_features = model.fc.in_features  # Input size of the ShuffleNet's original FC layer
+    # Modify the fully connected (fc) layer of ResNet50
+    in_features = model.fc.in_features  # Input size of the ResNet50's original FC layer
 
     fc_layers = []
     
@@ -61,7 +61,7 @@ def build_model(num_classes, num_layers, units_per_layer, dropout_rate, input_si
 
 # Step 3: Train the model with Early Stopping and Learning Rate Scheduler
 # Step 3: Train the model and save epoch metrics to a CSV
-def train_and_evaluate(model, train_loader, val_loader, epochs, device, patience=5, output_dir=r"/cluster/projects/kite/LindsayS/metrics_directory_resnet50", csv_filename='epoch_metrics.csv'):
+def train_and_evaluate(model, train_loader, val_loader, epochs, device, patience=5, output_dir=r"/cluster/projects/kite/LindsayS/metrics_directory_resnet50", csv_filename=r"cluster/projects/kite/LindsayS/epoch_metrics_resnet50.csv"):
     os.makedirs(output_dir, exist_ok=True)  # Ensure the output directory exists
     csv_path = os.path.join(output_dir, csv_filename)
 
@@ -189,7 +189,7 @@ def save_metrics_and_plots(metrics, param_dict, fold, output_dir):
     plt.close()
 
 # Step 5: Perform 5-fold cross-validation with grid search
-def cross_validate_and_grid_search(data_dir, param_grid, device, output_dir=r"/cluster/projects/kite/LindsayS/metrics_directory_resnet50"): #"/cluster/projects/kite/LindsayS/metrics_directory"
+def cross_validate_and_grid_search(data_dir, param_grid, device, output_dir=r"/cluster/projects/kite/LindsayS/metrics_directory_resnet50"): #"/cluster/projects/kite/LindsayS/metrics_directory_resnet50"
     dataset = load_data(data_dir)
     kfold = KFold(n_splits=5, shuffle=True, random_state=42)
 
