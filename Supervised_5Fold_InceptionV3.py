@@ -53,7 +53,7 @@ def build_model(num_classes, num_layers, units_per_layer, dropout_rate, input_si
 
 # Step 3: Train the model with Early Stopping and Learning Rate Scheduler
 # Step 3: Train the model and save epoch metrics to a CSV
-def train_and_evaluate(model, train_loader, val_loader, epochs, device, patience=5, output_dir=r"/cluster/projects/kite/LindsayS/metrics_directory_InceptionV3", csv_filename='/cluster/projects/kite/LindsayS/epoch_metrics_InceptionV3.csv'):
+def train_and_evaluate(model, train_loader, val_loader, epochs, device, patience=5, output_dir=r"/cluster/projects/kite/LindsayS/metrics_directory_InceptionV3", csv_filename=r"/cluster/projects/kite/LindsayS/epoch_metrics_InceptionV3.csv"):
     os.makedirs(output_dir, exist_ok=True)  # Ensure the output directory exists
     csv_path = os.path.join(output_dir, csv_filename)
 
@@ -181,7 +181,7 @@ def save_metrics_and_plots(metrics, param_dict, fold, output_dir):
     plt.close()
 
 # Step 5: Perform 5-fold cross-validation with grid search
-def cross_validate_and_grid_search(data_dir, param_grid, device, output_dir=r"/cluster/projects/kite/LindsayS/metrics_directory_InceptionV3"): #"/cluster/projects/kite/LindsayS/metrics_directory"
+def cross_validate_and_grid_search(data_dir, param_grid, device, output_dir=r"/cluster/projects/kite/LindsayS/metrics_directory_InceptionV3"): #"/cluster/projects/kite/LindsayS/metrics_directory_InceptionV3"
     dataset = load_data(data_dir)
     kfold = KFold(n_splits=5, shuffle=True, random_state=42)
 
