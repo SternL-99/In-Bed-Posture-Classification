@@ -19,7 +19,7 @@ def load_data(data_dir, input_size=224):
     dataset = datasets.ImageFolder(data_dir, transform=transform)
     return dataset
 
-# Step 2: Define the ShuffleNet model with tunable hyperparameters
+# Step 2: Define the VGG16 model with tunable hyperparameters
 def build_model(num_classes, num_layers, units_per_layer, dropout_rate, input_size=224):
     model = models.vgg16(pretrained=False)  # Load VGG16 without pre-trained weights
 
@@ -60,7 +60,7 @@ def build_model(num_classes, num_layers, units_per_layer, dropout_rate, input_si
 
 # Step 3: Train the model with Early Stopping and Learning Rate Scheduler
 # Step 3: Train the model and save epoch metrics to a CSV
-def train_and_evaluate(model, train_loader, val_loader, epochs, device, patience=5, output_dir=r"/cluster/projects/kite/LindsayS/metrics_directory_vgg16", csv_filename='epoch_metrics.csv'):
+def train_and_evaluate(model, train_loader, val_loader, epochs, device, patience=5, output_dir=r"/cluster/projects/kite/LindsayS/metrics_directory_vgg16", csv_filename=r"/cluster/projects/kite/LindsayS/epoch_metrics.csv"):
     os.makedirs(output_dir, exist_ok=True)  # Ensure the output directory exists
     csv_path = os.path.join(output_dir, csv_filename)
 
